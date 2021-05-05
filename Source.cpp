@@ -170,11 +170,12 @@ public:
 
 	void PrintList()const
 	{
-		Node<T>* iter = m_head;
-		while(m_end.m_endNode!=iter)
+		Container<T>::MyIterator it = this->begin();
+
+		while(it!= this->m_end())
 		{
-			std::cout << iter->value << "->";
-			iter = iter->next;
+			std::cout << *it<< "->";
+			++it;
 		}
 		std::cout << std::endl;
 	}
