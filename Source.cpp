@@ -170,11 +170,12 @@ public:
 
 	void PrintList()const
 	{
+	
 		Container<T>::MyIterator it = this->begin();
-
-		while(it!= this->m_end())
+		
+		while(it != this->end())
 		{
-			std::cout << *it<< "->";
+			std::cout << *it << "->";
 			++it;
 		}
 		std::cout << std::endl;
@@ -323,6 +324,9 @@ public:
 				iter = m_head;
 				m_head = m_tail;
 				m_tail = iter;
+				m_head->prev = nullptr;
+				m_end.m_endNode->prev = m_tail;
+				m_tail->next = m_end.m_endNode;
 			}
 		}
 	}
@@ -351,24 +355,17 @@ int main()
 		
 		
 		int x = 0;
-		for (int i = 0; i < 5; ++i)
+		for (int i = 0; i < 3; ++i)
 		{
 		
 			std::cin >> x;
 			example.AddToBottom(x);
 		}
-		
-		Container<int> test;
-		test.AddToBottom(10);
-		test.PrintList();
-		test=example;
-		Container<int>::MyIterator it = test.begin();
+		example.PrintList();
+		example.ReverseList();
+		example.PrintList();
 
-		while (it != test.end())
-		{
-			std::cout << *it << "->";
-			it++;
-		}
+		
 	}
 	catch (const std::exception & exc_situation)
 	{
