@@ -441,7 +441,7 @@ public:
 class AddTasktoList : public Task
 {
 public:
-	AddTasktoList(const Task & added_task, Container<Object*> & container) 
+	AddTasktoList(const Task & added_task, Container<Task*> & container) 
 	{
 		task = added_task;
 		toDoList = &container;
@@ -460,7 +460,7 @@ public:
 	}
 private:
 	Task task;
-	Container<Object*> *toDoList;
+	Container<Task*> *toDoList;
 };
 
 template<typename T>
@@ -594,7 +594,7 @@ int main()
 
 		
 
-		Container<Object*> list_of_task;
+		Container<Task*> list_of_task;
 		NamedBinaryTask minus('-', 23, 12,"minus");
 		NamedBinaryTask delit('/', 24, 2,"devision");
 		
@@ -618,12 +618,12 @@ int main()
 		list_of_task.PrintList();
 		AddTasktoList ad1(delit, list_of_task);
 		ad1.Execute();
-		CountContainerSize<Object*> contSize(list_of_task);
+		CountContainerSize<Task*> contSize(list_of_task);
 		contSize.Execute();
 		int ObectQuant = contSize.GetResult();
 
 
-		Container<Object*>::MyIterator it = list_of_task.begin();
+		Container<Task*>::MyIterator it = list_of_task.begin();
 		while(it!=list_of_task.end())
 		{
 			std::cout << (*it)->toString() << " ";
