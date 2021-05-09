@@ -19,9 +19,9 @@ public:
 public:
 	LastNode()
 		:m_endNode(nullptr) {}
-	LastNode(Node<T>* last_of_list) {
+	LastNode(Node<T>* listEnding) {
 		m_endNode->next = nullptr;
-		m_endNode->prev = last_of_list;
+		m_endNode->prev = listEnding;
 	}
 };
 
@@ -33,7 +33,7 @@ private:
 	Node<T>* m_head;
 	Node<T>* m_tail;
 	LastNode<T> m_end;
-	int length_of_list;
+	int listLenght;
 
 public:
 
@@ -68,9 +68,9 @@ public:
 		{
 			if(pointer!=parent->m_end.m_endNode )
 			{
-				MyIterator returned_ptr = *this;
+				MyIterator returnedPtr = *this;
 				pointer = pointer->next;
-				return returned_ptr; 
+				return returnedPtr; 
 			}
 			throw std::out_of_range("There is no next elemetns!");
 			
@@ -92,9 +92,9 @@ public:
 		{
 			if (pointer!= parent->m_head)
 			{
-				MyIterator returned_ptr = *this;
+				MyIterator returnedPtr = *this;
 				pointer = pointer->prev;
-				return returned_ptr;
+				return returnedPtr;
 			}
 			throw std::out_of_range("There is no previous elemetns!");
 		}
@@ -118,7 +118,7 @@ public:
 		m_head = nullptr;
 		m_tail = nullptr;
 		m_end.m_endNode = nullptr;
-		length_of_list = 0;
+		listLenght = 0;
 	}
 
 	~Container()
@@ -129,7 +129,7 @@ public:
 
 	Container(const Container<T>  & otherList)
 	{
-		length_of_list = 0;
+		listLenght = 0;
 		//Node<T>* iter = otherList.m_head;
 		Container<T>::MyIterator it = otherList.begin();
 
@@ -181,64 +181,64 @@ public:
 		std::cout << std::endl;
 	}
 
-	void AddToTop(const T new_value)
+	void AddToTop(const T newValue)
 	{
-		Node<T> *new_node = new Node<T>;
-		new_node->value = new_value;
-		if (length_of_list == 0)
+		Node<T> *newNode = new Node<T>;
+		newNode->value = newValue;
+		if (listLenght == 0)
 		{
-			Node<T> *end_node = new Node<T>;
-			m_end.m_endNode = end_node;
+			Node<T> *endNode = new Node<T>;
+			m_end.m_endNode = endNode;
 			m_end.m_endNode->next = nullptr;
 
-			new_node->next = m_end.m_endNode;
-			new_node->prev = nullptr;
-			m_head = new_node;
-			m_tail = new_node;
+			newNode->next = m_end.m_endNode;
+			newNode->prev = nullptr;
+			m_head = newNode;
+			m_tail = newNode;
 			m_end.m_endNode->prev = m_tail;
 
 		}
 		else
 		{
-			new_node->prev = nullptr;
-			new_node->next = m_head;
-			m_head->prev = new_node;
-			m_head = new_node;
+			newNode->prev = nullptr;
+			newNode->next = m_head;
+			m_head->prev = newNode;
+			m_head = newNode;
 		}
 
-		++length_of_list;
+		++listLenght;
 
 	}
 
 
-	void AddToBottom(const T new_value)
+	void AddToBottom(const T newValue)
 	{
-		Node<T> *new_node = new Node<T>;
-		new_node->value = new_value;
-		if (length_of_list == 0)
+		Node<T> *newNode = new Node<T>;
+		newNode->value = newValue;
+		if (listLenght == 0)
 		{
-			Node<T> *end_node = new Node<T>;
-			m_end.m_endNode = end_node;
+			Node<T> *endNode = new Node<T>;
+			m_end.m_endNode = endNode;
 			m_end.m_endNode->next = nullptr;
 
 
-			new_node->next = m_end.m_endNode;
-			new_node->prev = nullptr;
-			m_head = new_node;
+			newNode->next = m_end.m_endNode;
+			newNode->prev = nullptr;
+			m_head = newNode;
 			m_end.m_endNode->prev = m_tail;
-			m_tail = new_node;
+			m_tail = newNode;
 		}
 		else
 		{
-			new_node->prev = m_tail;
-			m_end.m_endNode->prev = new_node;
-			new_node->next = m_end.m_endNode;
-			m_tail->next = new_node;
-			m_tail = new_node;
+			newNode->prev = m_tail;
+			m_end.m_endNode->prev = newNode;
+			newNode->next = m_end.m_endNode;
+			m_tail->next = newNode;
+			m_tail = newNode;
 			
 		}
 
-		++length_of_list;
+		++listLenght;
 	}
 
 	T GetFirstValue()const
@@ -268,20 +268,20 @@ public:
 		m_head = nullptr;
 		m_tail = nullptr;
 		m_end.m_endNode = nullptr;
-		length_of_list = 0;
+		listLenght = 0;
 	}
 
 	void DeleteFirst()
 	{
 
-		if (length_of_list > 1)
+		if (listLenght > 1)
 		{
-			Node<T> *deleted_node = m_head;
+			Node<T> *deletedNode = m_head;
 			(m_head->next)->prev = nullptr;
 			m_head = m_head->next;
-			delete deleted_node;
+			delete deletedNode;
 
-			--length_of_list;
+			--listLenght;
 		}
 		else
 			Erase();
@@ -289,13 +289,13 @@ public:
 
 	void DeleteLast()
 	{
-		if (length_of_list > 1)
+		if (listLenght > 1)
 		{
-			Node<T> *deleted_node = m_tail;
+			Node<T> *deletedNode = m_tail;
 			(m_tail->prev)->next = nullptr;
 			m_tail = m_tail->prev;
-			delete deleted_node;
-			--length_of_list;
+			delete deletedNode;
+			--listLenght;
 		}
 		else
 			Erase();
@@ -309,12 +309,12 @@ public:
 
 
 		iter2 = m_head;
-		for (int i = 0; i < length_of_list; ++i)
+		for (int i = 0; i < listLenght; ++i)
 		{
 			iter2->next = iter2->prev;
 			iter2->prev = iter;
 
-			if (i != this->length_of_list - 1)
+			if (i != this->listLenght - 1)
 			{
 				iter2 = iter;
 				iter = iter->next;
