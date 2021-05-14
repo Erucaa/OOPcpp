@@ -212,6 +212,8 @@ public:
 	{
 		objectsQuantity = counter;
 		isExacute = true;
-	}	
+	}
+	
+	static std::size_t countObjects(){ return counter;}
 };
 
