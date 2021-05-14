@@ -113,7 +113,12 @@ public:
 		isExacute = true;
 
 	}
-	int GetResult() { return result; }
+	int GetResult() const
+	{
+		if(isExacute)
+			return result;
+		throw std::domain_error("This task isn't Execute yet!");
+	}
 private:
 	std::size_t result;
 	Container<Object *> &container;
