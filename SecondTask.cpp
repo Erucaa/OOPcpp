@@ -113,11 +113,11 @@ public:
 		isExacute = true;
 
 	}
-	int GetResult() const
+	std::string GetResult() const
 	{
 		if(isExacute)
-			return result;
-		throw std::domain_error("This task isn't Execute yet!");
+			return std::to_string(result);
+		return std::string("This task isn't Execute yet!");
 	}
 private:
 	std::size_t result;
@@ -205,7 +205,7 @@ class CountObject : public Task
 private:
 	std::size_t objectsQuantity;
 public:
-	std::string toString()
+	std::string toString() const
 	{
 		if (isExacute)
 			return std::string("I count Objects in program. Now there is " + std::to_string(objectsQuantity) + " in program. ");
