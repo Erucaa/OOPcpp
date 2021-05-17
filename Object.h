@@ -210,4 +210,11 @@ public:
 		objectsQuantity = counter;
 		isExacute = true;
 	}
+	
+	std::size_t countObject() const
+	{
+		if(!isExecute)
+			throw std::domain_error("This task isn't Execute yet!");
+		return counter;
+	}
 };
