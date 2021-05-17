@@ -19,8 +19,6 @@ Task * GenerateAlgerbaicTask()
 		return new NamedBinaryTask("Multiplication", '*', randomNumber(-250, 250), randomNumber(-250, 250));
 	case 4:
 		return new NamedBinaryTask("Division", '/', randomNumber(-250, 250), randomNumber(-250, 250));
-	default:
-		break;
 	}
 
 }
