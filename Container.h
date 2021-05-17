@@ -33,50 +33,61 @@ public:
 			pointer = other.pointer;
 			return *this;
 		}
-		Iterator & operator++()
-		{
-			if (pointer == nullptr)
-				throw std::out_of_range("There is no next elemetns!");
-			if (pointer->next == nullptr)
-				throw std::out_of_range("There is no next elemetns!");
 
-			pointer = pointer->next;
-			return *this;
-		}
-
-		Iterator operator++(int)
-		{
-			if (pointer == nullptr)
-				throw std::out_of_range("There is no elemetns!");
-			if(pointer-> next == nullptr)
-				throw std::out_of_range("There is no next elemetns!");
-			Iterator returned_ptr = *this;
-			pointer = pointer->next;
-			return returned_ptr;
-
-		}
-
-		Iterator & operator--()
+		bool CanDecrease()
 		{
 			if (pointer == nullptr)
 				throw std::out_of_range("There is no previous elements!");
 			if( pointer->prev == nullptr)
 				throw std::out_of_range("There is no previous elements!");
+			return true;
+		}
 
-			pointer = pointer->prev;
-			return *this;
+		bool CanIncrease()
+		{
+			if (pointer == nullptr)
+				throw std::out_of_range("There is no elemetns!");
+			if (pointer->next == nullptr)
+				throw std::out_of_range("There is no next elemetns!");
+			return true;
+		}
+		Iterator & operator++()
+		{
+			if (CanIncrease())
+			{
+				pointer = pointer->next;
+				return *this;
+			}
+		}
+
+		Iterator operator++(int)
+		{
+			if (CanIncrease())
+			{
+				Iterator returned_ptr = *this;
+				pointer = pointer->next;
+				return returned_ptr;
+			}
+
+		}
+
+		Iterator & operator--()
+		{
+			if (CanDecrease())
+			{
+				pointer = pointer->prev;
+				return *this;
+			}
 		}
 
 		Iterator operator--(int)
 		{
-			if (pointer == nullptr)
-				throw std::out_of_range("There is no previous elements!");
-			if (pointer->prev == nullptr)
-				throw std::out_of_range("There is no previous elements!");
-			
-			Iterator returned_ptr = *this;
-			pointer = pointer->prev;
-			return returned_ptr;
+			if (CanDecrease())
+			{
+				Iterator returned_ptr = *this;
+				pointer = pointer->prev;
+				return returned_ptr;
+			}
 		}
 
 		bool operator !=( Iterator const & otherPtr) const
@@ -187,7 +198,7 @@ public:
 		if (Empty())
 		{
 			new_node->prev = nullptr;
-			m_head = new_node
+			m_head = new_node;
 		}
 		else
 		{
