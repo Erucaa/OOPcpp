@@ -113,8 +113,7 @@ public:
 			AddToBottom(*it);
 			++it;
 		}
-
-		it = nullptr;
+		AddToBottom(*it);
 	}
 
 	Container & operator = (const Container<T> & otherList)
@@ -127,8 +126,7 @@ public:
 			AddToBottom(*it);
 			++it;
 		}
-
-		it = nullptr;
+		AddToBottom(*it);
 
 		return *this;
 	}
@@ -162,21 +160,20 @@ public:
 	{
 		Node *new_node = new Node;
 		new_node->value = new_value;
+		new_node->prev = nullptr;
+		
 		if (Empty())
 		{
 			new_node->next = nullptr;
-			new_node->prev = nullptr;
-			m_head = m_tail = new_node;
-
+			m_tail = new_node;
 		}
 		else
 		{
-			new_node->prev = nullptr;
 			new_node->next = m_head;
 			m_head->prev = new_node;
-			m_head = new_node;
 		}
 
+		m_head = new_node;
 		++m_size;
 
 	}
@@ -185,22 +182,20 @@ public:
 	{
 		Node *new_node = new Node;
 		new_node->value = new_value;
+		new_node->next = nullptr;
+
 		if (Empty())
 		{
-			new_node->next = nullptr;
 			new_node->prev = nullptr;
-			m_head = m_tail = new_node;
-
+			m_head = new_node
 		}
 		else
 		{
 			new_node->prev = m_tail;
-			new_node->next = nullptr;
 			m_tail->next = new_node;
-			m_tail = new_node;
-
 		}
 
+		m_tail = new_node;
 		++m_size;
 	}
 
@@ -258,8 +253,6 @@ public:
 			(m_head->next)->prev = nullptr;
 			m_head = m_head->next;
 			delete deleted_node;
-
-			
 		}
 		else
 		{
@@ -311,7 +304,6 @@ public:
 		m_tail->next = nullptr;
 		m_head->prev = nullptr;
 		
-
 	}
 
 	std::size_t  GetLenght() const
