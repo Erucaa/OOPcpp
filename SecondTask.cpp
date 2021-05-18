@@ -125,7 +125,7 @@ private:
 };
 
 
-class NamedBinaryTask : public Task, public Named
+class ArithmeticTask : public Task, public Named
 {
 private:
 
@@ -134,7 +134,7 @@ private:
 	char operatorSigne;
 	bool zeroDivision = false;
 public:
-	NamedBinaryTask(std::string const& operationName, char const signe, double lArg, double  rArg)
+	 ArithmeticTask(std::string const& operationName, char const signe, double lArg, double  rArg)
 		: Named(operationName), leftArgument(lArg),rightArgument(rArg), operatorSigne(signe){}
 	
 	std::string toString() const
@@ -145,7 +145,7 @@ public:
 		{
 			if (zeroDivision)
 				return std::string("Cannot execute this operation because of incorrect task!");
-			return std::string( "Task of NamedBinaryTask isn't execute yet.");
+			return std::string( "Task of  ArithmeticTask isn't execute yet.");
 		}
 	}
 
@@ -199,28 +199,18 @@ public:
 	}
 };
 
-class CountObject : public Task
+class CountObjectTask : public Task
 {
-private:
-	std::size_t objectsQuantity;
 public:
 	std::string toString() const
 	{
 		if (isExacute)
-			return std::string("I count Objects in program. Now there is " + std::to_string(objectsQuantity) + " in program. ");
+			return std::string("I count Objects in program. Now there is " + std::to_string(this->counter) + " in program. ");
 		return std::string(" Task of counting quantity of Objects in this Programm isn't execute yet. ");
 	}
 	void Execute()
 	{
-		objectsQuantity = counter;
 		isExacute = true;
-	}
-
-	std::size_t countObject()
-	{
-		if (!isExacute)
-			throw std::domain_error("This task isn't Execute yet!");
-		return counter;
 	}
 	
 };
