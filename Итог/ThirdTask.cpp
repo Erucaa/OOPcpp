@@ -44,7 +44,7 @@ int main()
 
 		Task * task = toDoList.GetFirstValue();
 		task->Execute();
-		tasksInformation.AddToTop(task->toString());
+		tasksInformation.AddToBottom(task->toString());
 		delete task;
 		toDoList.DeleteFirst();
 	}
