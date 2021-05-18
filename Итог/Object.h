@@ -9,6 +9,7 @@ public:
 	{
 		++counter;
 	}
+	Object(const Object & otherObject){}
 	virtual ~Object()
 	{
 		--counter;
