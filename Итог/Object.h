@@ -100,25 +100,25 @@ public:
 	std::string toString() const
 	{
 		if (isExecuted)
-			return "Size of container is " + std::to_string(result);
+			return "Size of container is " + result;
 		else
 			return "Task of Count Container size isn't execute yet. ";
 	}
 
 	void Execute()
 	{
-		result = container.GetLenght();
+		result = std::to_string(container.GetLenght());
 		isExecuted = true;
 
 	}
 	std::string GetResult() 
 	{
 		if(isExecuted)
-			return std::to_string(result);
+			return result;
 		return std::string("This task isn't Execute yet!");
 	}
 private:
-	std::size_t result;
+	std::string result;
 	Container<Object *> &container;
 
 };
@@ -205,7 +205,7 @@ public:
 	std::string toString() const
 	{
 		if (isExecuted)
-			return std::string("I count Objects in program. Now there is " + std::to_string(this->counter) + " in program. ");
+			return std::string("I count Objects in program. Now there is " + std::to_string(Object::getCount()) + " in program. ");
 		return std::string(" Task of counting quantity of Objects in this Programm isn't execute yet. ");
 	}
 	void Execute()
