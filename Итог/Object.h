@@ -1,5 +1,5 @@
+#pragma once
 #include<Container.h>
-
 class Object
 {
 protected:
@@ -20,7 +20,7 @@ public:
 
 std::size_t Object::counter = 0;
 
-class Task :  virtual public Object 
+class Task : virtual public Object
 {
 protected:
 	bool isExacute = false;
@@ -31,8 +31,7 @@ public:
 class Named : virtual public Object
 {
 public:
-
-	Named(std::string const& newName):name(newName){}
+	Named(std::string const& newName) :name(newName) {}
 
 protected:
 	std::string name;
@@ -49,7 +48,7 @@ public:
 
 
 	EraseContainer(Container<Object*> & list)
-		:container(list){}
+		:container(list) {}
 
 	std::string toString() const
 	{
@@ -69,9 +68,9 @@ public:
 class AddTasktoList : public Task
 {
 public:
-	AddTasktoList(Task * added_task, Container<Task*> & container) 
-		:task(added_task), m_container(container){}
-	
+	AddTasktoList(Task * added_task, Container<Task*> & other_container)
+		:task(added_task), container(other_container) {}
+
 	std::string toString() const
 	{
 		if (isExacute)
@@ -83,12 +82,12 @@ public:
 	{
 		if (isExacute)
 			return;
-		m_container.AddToBottom(task);
+		container.AddToBottom(task);
 		isExacute = true;
 	}
 private:
 	Task * task;
-	Container<Task*> &m_container;
+	Container<Task*> &container;
 };
 
 template<typename T>
@@ -96,8 +95,8 @@ class CountContainerSize : public Task
 {
 public:
 	CountContainerSize(Container<Object *> & list)
-		:container(list){}
-	
+		:container(list) {}
+
 	std::string toString() const
 	{
 		if (isExacute)
@@ -112,12 +111,7 @@ public:
 		isExacute = true;
 
 	}
-	std::string GetResult() const
-	{
-		if(isExacute)
-			return std::to_string(result);
-		return std::string("This task isn't Execute yet!");
-	}
+	int GetResult() { return result; }
 private:
 	std::size_t result;
 	Container<Object *> &container;
@@ -129,23 +123,24 @@ class NamedBinaryTask : public Task, public Named
 {
 private:
 
-	double result,leftArgument,rightArgument;
+	double result;
+	int leftArgument, rightArgument;
 	std::string myAction;
 	char operatorSigne;
 	bool zeroDivision = false;
 public:
-	NamedBinaryTask(std::string const& operationName, char const signe, double lArg, double  rArg)
-		: Named(operationName), leftArgument(lArg),rightArgument(rArg), operatorSigne(signe){}
-	
+	NamedBinaryTask(std::string const& operationName, char const signe, int lArg, int rArg)
+		: Named(operationName), leftArgument(lArg), rightArgument(rArg), operatorSigne(signe) {}
+
 	std::string toString() const
 	{
 		if (isExacute)
-			return "Task '"+name + "': "+myAction+" Result of operation : " + std::to_string(result);
+			return "Task '" + name + "': " + myAction + " Result of operation : " + std::to_string(result);
 		else
 		{
 			if (zeroDivision)
 				return std::string("Cannot execute this operation because of incorrect task!");
-			return std::string( "Task of NamedBinaryTask isn't execute yet.");
+			return std::string("Task of NamedBinaryTask isn't execute yet.");
 		}
 	}
 
@@ -162,7 +157,7 @@ public:
 			myAction = "Addition of " + std::to_string(leftArgument) + " and " + std::to_string(rightArgument);
 			break;
 		}
-		
+
 		case '-':
 		{
 			isExacute = true;
@@ -195,7 +190,7 @@ public:
 			zeroDivision = true;
 			break;
 		}
-		
+
 	}
 };
 
@@ -215,13 +210,11 @@ public:
 		objectsQuantity = counter;
 		isExacute = true;
 	}
-
-	std::size_t countObject()
+	
+	std::size_t countObject() const
 	{
-		if (!isExacute)
+		if(!isExecute)
 			throw std::domain_error("This task isn't Execute yet!");
 		return counter;
 	}
-	
 };
-
