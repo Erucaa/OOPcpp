@@ -111,7 +111,12 @@ public:
 		isExacute = true;
 
 	}
-	int GetResult() { return result; }
+	std::string GetResult() 
+	{
+		if(isExecute)
+			return std::to_string(result);
+		return std::string("This task isn't Execute yet!");
+	}
 private:
 	std::size_t result;
 	Container<Object *> &container;
