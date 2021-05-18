@@ -34,9 +34,9 @@ int main()
 		add.Execute();
 	}
 
-	CountObject objectQuantity;
-	objectQuantity.Execute();
-	std::cout << objectQuantity.toString() << std::endl;
+	CountObject *objectQuantity = new CountObject;
+	objectQuantity->Execute();
+	std::cout << objectQuantity->toString() << std::endl;
 
 	Container<std::string> tasksInformation;
 
@@ -61,9 +61,7 @@ int main()
 	std::cout << std::endl;
 
 	tasksInformation.Erase();
-
-	objectQuantity.Execute();
-	std::cout << objectQuantity.toString() << std::endl;
+	delete objectQuantity;
 
 	std::cout << Object::getCount();
 
