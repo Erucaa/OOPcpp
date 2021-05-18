@@ -7,7 +7,7 @@ int randomNumber(int min, int max)
 	return static_cast<int>(rand()*dr*(max - min + 1) + min);
 
 }
-Task * GenerateArithmeticTask()
+ArithmeticTask * GenerateArithmeticTask()
 {
 	switch (randomNumber(1, 4))
 	{
