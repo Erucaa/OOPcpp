@@ -7,18 +7,18 @@ int randomNumber(int min, int max)
 	return static_cast<int>(rand()*dr*(max - min + 1) + min);
 
 }
-Task * GenerateAlgerbaicTask()
+Task * GenerateArithmeticTask()
 {
 	switch (randomNumber(1, 4))
 	{
 	case 1:
-		return new NamedBinaryTask("Add", '+', randomNumber(-250, 250), randomNumber(-250, 250));
+		return new ArithmeticTask("Add", '+', randomNumber(-250, 250), randomNumber(-250, 250));
 	case 2:
-		return new NamedBinaryTask("Substraction", '-', randomNumber(-250, 250), randomNumber(-250, 250));
+		return new ArithmeticTask("Substraction", '-', randomNumber(-250, 250), randomNumber(-250, 250));
 	case 3:
-		return new NamedBinaryTask("Multiplication", '*', randomNumber(-250, 250), randomNumber(-250, 250));
+		return new ArithmeticTask("Multiplication", '*', randomNumber(-250, 250), randomNumber(-250, 250));
 	case 4:
-		return new NamedBinaryTask("Division", '/', randomNumber(-250, 250), randomNumber(-250, 250));
+		return new ArithmeticTask("Division", '/', randomNumber(-250, 250), randomNumber(-250, 250));
 	}
 
 }
@@ -30,13 +30,12 @@ int main()
 	Container<Task *> toDoList;
 	for (int i = 0; i < 13; ++i)
 	{
-		AddTasktoList add(GenerateAlgerbaicTask(), toDoList);
+		AddTasktoList add(GenerateArithmeticTask(), toDoList);
 		add.Execute();
 	}
+	
+	toDoList.AddToTop(new CountObjectTask);
 
-	CountObject *objectQuantity = new CountObject;
-	objectQuantity->Execute();
-	std::cout << objectQuantity->toString() << std::endl;
 
 	Container<std::string> tasksInformation;
 
@@ -61,7 +60,6 @@ int main()
 	std::cout << std::endl;
 
 	tasksInformation.Erase();
-	delete objectQuantity;
 
 	std::cout << Object::getCount();
 

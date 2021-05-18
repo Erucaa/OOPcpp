@@ -28,66 +28,54 @@ public:
 		Iterator( Node* ptr)
 			:pointer(ptr){}
 
-		Iterator & operator =(const Iterator & other)
-		{
-			pointer = other.pointer;
-			return *this;
-		}
-
-		bool CanDecrease()
+		void CanDecrease()
 		{
 			if (pointer == nullptr)
 				throw std::out_of_range("There is no previous elements!");
-			if( pointer->prev == nullptr)
+			if (pointer->prev == nullptr)
 				throw std::out_of_range("There is no previous elements!");
-			return true;
 		}
 
-		bool CanIncrease()
+		void CanIncrease()
 		{
 			if (pointer == nullptr)
 				throw std::out_of_range("There is no elemetns!");
 			if (pointer->next == nullptr)
 				throw std::out_of_range("There is no next elemetns!");
-			return true;
 		}
+
 		Iterator & operator++()
 		{
-			if (CanIncrease())
-			{
-				pointer = pointer->next;
-				return *this;
-			}
+			CanIncrease();
+
+			pointer = pointer->next;
+			return *this;
 		}
 
 		Iterator operator++(int)
 		{
-			if (CanIncrease())
-			{
-				Iterator returned_ptr = *this;
-				pointer = pointer->next;
-				return returned_ptr;
-			}
+			CanIncrease();
 
+			Iterator returned_ptr = *this;
+			pointer = pointer->next;
+			return returned_ptr;
 		}
 
 		Iterator & operator--()
 		{
-			if (CanDecrease())
-			{
-				pointer = pointer->prev;
-				return *this;
-			}
+			CanDecrease();
+
+			pointer = pointer->prev;
+			return *this;
 		}
 
 		Iterator operator--(int)
 		{
-			if (CanDecrease())
-			{
-				Iterator returned_ptr = *this;
-				pointer = pointer->prev;
-				return returned_ptr;
-			}
+			CanDecrease();
+
+			Iterator returned_ptr = *this;
+			pointer = pointer->prev;
+			return returned_ptr;
 		}
 
 		bool operator !=( Iterator const & otherPtr) const
@@ -95,6 +83,7 @@ public:
 			return pointer != otherPtr.pointer;
 		}
 		bool operator ==(Iterator const& otherPtr)const { return (pointer == otherPtr.pointer); }
+
 		T& operator*()
 		{
 			if (pointer == nullptr)
@@ -109,7 +98,6 @@ public:
 	~Container()
 	{
 		Erase();
-
 	}
 	
 	bool Empty() { return (m_size == 0); }

@@ -23,7 +23,7 @@ std::size_t Object::counter = 0;
 class Task : virtual public Object
 {
 protected:
-	bool isExacute = false;
+	bool isExecuted = false;
 public:
 	virtual void Execute() = 0;
 };
@@ -37,7 +37,7 @@ protected:
 	std::string name;
 };
 
-template<typename T>
+
 class EraseContainer : public Task
 {
 private:
@@ -52,7 +52,7 @@ public:
 
 	std::string toString() const
 	{
-		if (isExacute)
+		if (isExecuted)
 			return std::string("List was erased.");
 		else
 			return std::string("Task 'Erase conatiner' isn't execute yet");
@@ -60,7 +60,7 @@ public:
 
 	void Execute()
 	{
-		isExacute = true;
+		isExecuted = true;
 		container.Erase();
 	}
 };
@@ -73,24 +73,23 @@ public:
 
 	std::string toString() const
 	{
-		if (isExacute)
+		if (isExecuted)
 			return "I'm  already add task to Container";
 		else
 			return "Task isn't added yet.";
 	}
 	void Execute()
 	{
-		if (isExacute)
+		if (isExecuted)
 			return;
 		container.AddToBottom(task);
-		isExacute = true;
+		isExecuted = true;
 	}
 private:
 	Task * task;
 	Container<Task*> &container;
 };
 
-template<typename T>
 class CountContainerSize : public Task
 {
 public:
@@ -99,7 +98,7 @@ public:
 
 	std::string toString() const
 	{
-		if (isExacute)
+		if (isExecuted)
 			return "Size of container is " + std::to_string(result);
 		else
 			return "Task of Count Container size isn't execute yet. ";
@@ -108,12 +107,12 @@ public:
 	void Execute()
 	{
 		result = container.GetLenght();
-		isExacute = true;
+		isExecuted = true;
 
 	}
 	std::string GetResult() 
 	{
-		if(isExecute)
+		if(isExecuted)
 			return std::to_string(result);
 		return std::string("This task isn't Execute yet!");
 	}
@@ -124,7 +123,7 @@ private:
 };
 
 
-class NamedBinaryTask : public Task, public Named
+class  ArithmeticTask : public Task, public Named
 {
 private:
 
@@ -134,30 +133,30 @@ private:
 	char operatorSigne;
 	bool zeroDivision = false;
 public:
-	NamedBinaryTask(std::string const& operationName, char const signe, int lArg, int rArg)
+	 ArithmeticTask(std::string const& operationName, char const signe, int lArg, int rArg)
 		: Named(operationName), leftArgument(lArg), rightArgument(rArg), operatorSigne(signe) {}
 
 	std::string toString() const
 	{
-		if (isExacute)
+		if (isExecuted)
 			return "Task '" + name + "': " + myAction + " Result of operation : " + std::to_string(result);
 		else
 		{
 			if (zeroDivision)
 				return std::string("Cannot execute this operation because of incorrect task!");
-			return std::string("Task of NamedBinaryTask isn't execute yet.");
+			return std::string("Task of  ArithmeticTask isn't execute yet.");
 		}
 	}
 
 	void Execute()
 	{
-		if (isExacute)
+		if (isExecuted)
 			return;
 		switch (operatorSigne)
 		{
 		case '+':
 		{
-			isExacute = true;
+			isExecuted = true;
 			result = leftArgument + rightArgument;
 			myAction = "Addition of " + std::to_string(leftArgument) + " and " + std::to_string(rightArgument);
 			break;
@@ -165,7 +164,7 @@ public:
 
 		case '-':
 		{
-			isExacute = true;
+			isExecuted = true;
 			result = leftArgument - rightArgument;
 			myAction = "Substraction of " + std::to_string(leftArgument) + " on " + std::to_string(rightArgument);
 			break;
@@ -175,7 +174,7 @@ public:
 		{
 			result = leftArgument * rightArgument;
 			myAction = "Multiplication of " + std::to_string(leftArgument) + " and " + std::to_string(rightArgument);
-			isExacute = true;
+			isExecuted = true;
 			break;
 		}
 
@@ -186,7 +185,7 @@ public:
 				zeroDivision = true;
 				break;
 			}
-			isExacute = true;
+			isExecuted = true;
 			result = leftArgument / rightArgument;
 			myAction = "Division of " + std::to_string(leftArgument) + " on " + std::to_string(rightArgument);
 			break;
@@ -199,27 +198,18 @@ public:
 	}
 };
 
-class CountObject : public Task
+class CountObjectTask : public Task
 {
-private:
-	std::size_t objectsQuantity;
 public:
 	std::string toString() const
 	{
-		if (isExacute)
-			return std::string("I count Objects in program. Now there is " + std::to_string(objectsQuantity) + " in program. ");
+		if (isExecuted)
+			return std::string("I count Objects in program. Now there is " + std::to_string(this->counter) + " in program. ");
 		return std::string(" Task of counting quantity of Objects in this Programm isn't execute yet. ");
 	}
 	void Execute()
 	{
-		objectsQuantity = counter;
-		isExacute = true;
+		isExecuted = true;
 	}
 	
-	std::size_t countObject() const
-	{
-		if(!isExecute)
-			throw std::domain_error("This task isn't Execute yet!");
-		return counter;
-	}
 };
